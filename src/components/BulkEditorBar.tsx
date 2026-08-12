@@ -11,7 +11,8 @@ import {
   Sliders,
   ChevronDown,
   ChevronUp,
-  Activity
+  Activity,
+  ShieldCheck
 } from 'lucide-react';
 import { BulkMetadataConfig, Mp3Track } from '../types';
 
@@ -26,6 +27,7 @@ interface BulkEditorBarProps {
   onOpenFindReplace: () => void;
   onOpenLyricsEditor: () => void;
   onOpenSpectralAnalyzer?: () => void;
+  onOpenDistroAudit?: () => void;
 }
 
 const COMMON_GENRES = [
@@ -45,6 +47,7 @@ export const BulkEditorBar: React.FC<BulkEditorBarProps> = ({
   onOpenFindReplace,
   onOpenLyricsEditor,
   onOpenSpectralAnalyzer,
+  onOpenDistroAudit,
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   
@@ -152,6 +155,17 @@ export const BulkEditorBar: React.FC<BulkEditorBarProps> = ({
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
               <span>Lyrics Batch Cleaner</span>
             </button>
+
+            {onOpenDistroAudit && (
+              <button
+                onClick={onOpenDistroAudit}
+                className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition cursor-pointer font-bold"
+                title="Run LUFS, EQ, and Distribution Readiness Audit"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-white" />
+                <span>Distro & Mix Audit</span>
+              </button>
+            )}
 
             {onOpenSpectralAnalyzer && (
               <button

@@ -47,10 +47,51 @@ export interface Mp3Track {
     detectedSpectralSignatures: string[];
   };
 
+  // Deterministic Mix, EQ & Distribution Readiness Analysis
+  distroReport?: DistroReadinessReport;
+
   // State
   isCleaned: boolean;
   isSelected: boolean;
   audioUrl?: string;
+}
+
+export interface DistroReadinessReport {
+  analyzed: boolean;
+  
+  // Loudness & Peak Dynamics (EBU R128 / ITU BS.1770)
+  integratedLufs: number; // e.g. -14 LUFS target
+  peakDbfs: number; // e.g. -1.0 dBFS true peak ceiling
+  dynamicRangeDb: number; // Crest Factor (Peak - RMS)
+  loudnessRating: 'Optimal for Streaming (-14 LUFS)' | 'Loud / Club Master (-8 to -11 LUFS)' | 'Too Quiet (>-18 LUFS)' | 'Over-Compressed / Clipping';
+  
+  // EQ & Tonal Balance (6 Octave Bands)
+  subBassDb: number; // 20-60 Hz
+  bassDb: number; // 60-250 Hz
+  lowMidsDb: number; // 250-500 Hz
+  midsDb: number; // 500-2kHz
+  highMidsDb: number; // 2k-6kHz
+  highsDb: number; // 6k-20kHz
+  eqWarnings: string[]; // e.g. ["Low-Mid Mud (+4.2dB)", "Lacks Air (-6dB)"]
+
+  // Vocal Presence & Stereo Width
+  vocalEnergyRatio: number; // 0 - 100% center channel vocal presence
+  vocalPresenceStatus: 'Strong Lead Vocal' | 'Moderate Vocal' | 'Instrumental / Recessed Vocal';
+  stereoWidthPercent: number; // 0% (Mono) to 100% (Balanced) to 150%+ (Ultra-wide)
+  stereoStatus: 'Mono' | 'Focused Stereo' | 'Wide Stereo' | 'Potential Phase Issue';
+
+  // Overall Distro Readiness Audit
+  distroScore: number; // 0 - 100%
+  distroStatus: 'Ready for Distribution' | 'Minor Master Tweaks Suggested' | 'Action Required Before Upload';
+  auditChecklist: {
+    titleClean: boolean;
+    hasCoverArt: boolean;
+    coverArtResolutionOk: boolean;
+    noAiArtifacts: boolean;
+    loudnessCompliant: boolean;
+    peakHeadroomOk: boolean;
+    details: string[];
+  };
 }
 
 export interface BulkMetadataConfig {

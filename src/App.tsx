@@ -22,6 +22,7 @@ import { CoverArtProcessor } from './components/CoverArtProcessor';
 import { LyricsEditorModal } from './components/LyricsEditorModal';
 import { FindReplaceModal } from './components/FindReplaceModal';
 import { SpectralAnalysisModal } from './components/SpectralAnalysisModal';
+import { DistroAuditModal } from './components/DistroAuditModal';
 import { AudioPreviewPlayer } from './components/AudioPreviewPlayer';
 import { ExportPanel } from './components/ExportPanel';
 
@@ -39,6 +40,7 @@ export default function App() {
   const [isCoverArtOpen, setIsCoverArtOpen] = useState(false);
   const [isFindReplaceOpen, setIsFindReplaceOpen] = useState(false);
   const [isSpectralModalOpen, setIsSpectralModalOpen] = useState(false);
+  const [isDistroAuditOpen, setIsDistroAuditOpen] = useState(false);
   const [lyricsModal, setLyricsModal] = useState<{ isOpen: boolean; track: Mp3Track | null }>({
     isOpen: false,
     track: null,
@@ -336,6 +338,7 @@ export default function App() {
         onExportZip={() => handleExportZip('Cleaned_MP3_Album')}
         onClearAll={handleClearAll}
         onOpenSpectralAnalyzer={() => setIsSpectralModalOpen(true)}
+        onOpenDistroAudit={() => setIsDistroAuditOpen(true)}
         isProcessing={isProcessing}
       />
 
@@ -354,6 +357,7 @@ export default function App() {
         <FileUploader
           onFilesSelected={handleFilesSelected}
           onLoadSamples={handleLoadSamples}
+          onOpenDistroAudit={() => setIsDistroAuditOpen(true)}
           isProcessing={isProcessing}
           hasTracks={tracks.length > 0}
         />
@@ -374,6 +378,7 @@ export default function App() {
                 setLyricsModal({ isOpen: true, track: selectedTracks[0] || tracks[0] })
               }
               onOpenSpectralAnalyzer={() => setIsSpectralModalOpen(true)}
+              onOpenDistroAudit={() => setIsDistroAuditOpen(true)}
             />
 
             {/* Interactive Track Grid */}
@@ -445,6 +450,16 @@ export default function App() {
           tracks={tracks}
           onUpdateTrack={handleUpdateTrack}
           onClose={() => setIsSpectralModalOpen(false)}
+        />
+      )}
+
+      {/* Distribution & Mix Audit Modal */}
+      {isDistroAuditOpen && (
+        <DistroAuditModal
+          tracks={tracks}
+          onUpdateTrack={handleUpdateTrack}
+          onClose={() => setIsDistroAuditOpen(false)}
+          onLoadSamples={handleLoadSamples}
         />
       )}
 

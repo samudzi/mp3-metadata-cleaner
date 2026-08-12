@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { UploadCloud, Music, FolderPlus, Sparkles, FileAudio } from 'lucide-react';
+import { UploadCloud, Music, FolderPlus, Sparkles, FileAudio, ShieldCheck } from 'lucide-react';
 
 interface FileUploaderProps {
   onFilesSelected: (files: FileList | File[]) => void;
   onLoadSamples: () => void;
+  onOpenDistroAudit?: () => void;
   isProcessing: boolean;
   hasTracks: boolean;
 }
@@ -11,6 +12,7 @@ interface FileUploaderProps {
 export const FileUploader: React.FC<FileUploaderProps> = ({
   onFilesSelected,
   onLoadSamples,
+  onOpenDistroAudit,
   isProcessing,
   hasTracks,
 }) => {
@@ -120,14 +122,27 @@ export const FileUploader: React.FC<FileUploaderProps> = ({
           </button>
 
           {!hasTracks && (
-            <button
-              onClick={onLoadSamples}
-              disabled={isProcessing}
-              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 transition cursor-pointer"
-            >
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>Load Demo Suno Album</span>
-            </button>
+            <>
+              <button
+                onClick={onLoadSamples}
+                disabled={isProcessing}
+                className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 transition cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4 text-amber-400" />
+                <span>Load Demo Album</span>
+              </button>
+
+              {onOpenDistroAudit && (
+                <button
+                  onClick={onOpenDistroAudit}
+                  disabled={isProcessing}
+                  className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20 transition cursor-pointer"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Open Distro Audit</span>
+                </button>
+              )}
+            </>
           )}
         </div>
 
