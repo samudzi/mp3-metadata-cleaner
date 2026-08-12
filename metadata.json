@@ -1,0 +1,6 @@
+{
+  "name": "Bulk MP3 Metadata Cleaner",
+  "description": "Batch MP3 ID3 tag editor, Suno metadata cleaner, and cover art processor.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
