@@ -21,6 +21,7 @@ import { TrackTable } from './components/TrackTable';
 import { CoverArtProcessor } from './components/CoverArtProcessor';
 import { LyricsEditorModal } from './components/LyricsEditorModal';
 import { FindReplaceModal } from './components/FindReplaceModal';
+import { SpectralAnalysisModal } from './components/SpectralAnalysisModal';
 import { AudioPreviewPlayer } from './components/AudioPreviewPlayer';
 import { ExportPanel } from './components/ExportPanel';
 
@@ -37,6 +38,7 @@ export default function App() {
   // Modals & Panels
   const [isCoverArtOpen, setIsCoverArtOpen] = useState(false);
   const [isFindReplaceOpen, setIsFindReplaceOpen] = useState(false);
+  const [isSpectralModalOpen, setIsSpectralModalOpen] = useState(false);
   const [lyricsModal, setLyricsModal] = useState<{ isOpen: boolean; track: Mp3Track | null }>({
     isOpen: false,
     track: null,
@@ -333,6 +335,7 @@ export default function App() {
         onPurgeSuno={handlePurgeSuno}
         onExportZip={() => handleExportZip('Cleaned_MP3_Album')}
         onClearAll={handleClearAll}
+        onOpenSpectralAnalyzer={() => setIsSpectralModalOpen(true)}
         isProcessing={isProcessing}
       />
 
@@ -370,6 +373,7 @@ export default function App() {
               onOpenLyricsEditor={() =>
                 setLyricsModal({ isOpen: true, track: selectedTracks[0] || tracks[0] })
               }
+              onOpenSpectralAnalyzer={() => setIsSpectralModalOpen(true)}
             />
 
             {/* Interactive Track Grid */}
@@ -434,6 +438,15 @@ export default function App() {
         selectedTracks={selectedTracks}
         onExecuteFindReplace={handleExecuteFindReplace}
       />
+
+      {/* Spectral Analysis Modal */}
+      {isSpectralModalOpen && (
+        <SpectralAnalysisModal
+          tracks={tracks}
+          onUpdateTrack={handleUpdateTrack}
+          onClose={() => setIsSpectralModalOpen(false)}
+        />
+      )}
 
       {/* Audio Preview Sticky Bar */}
       <AudioPreviewPlayer

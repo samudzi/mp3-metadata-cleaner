@@ -34,6 +34,19 @@ export interface Mp3Track {
     reasons: string[]; // e.g. ["Suno ID in comment", "Style tags in title", "Suno in artist"]
   };
 
+  // Deterministic Spectral Analysis
+  spectralReport?: {
+    analyzed: boolean;
+    cutoffFrequencyHz: number;
+    highBandEnergyDb: number;
+    subBassRumbleEnergyDb: number;
+    spectralFlatness: number;
+    phaseCorrelation: number;
+    isAIGeneratedSignature: boolean;
+    confidenceScore: number;
+    detectedSpectralSignatures: string[];
+  };
+
   // State
   isCleaned: boolean;
   isSelected: boolean;

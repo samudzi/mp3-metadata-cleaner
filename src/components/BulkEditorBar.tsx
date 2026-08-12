@@ -10,7 +10,8 @@ import {
   Wand2,
   Sliders,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Activity
 } from 'lucide-react';
 import { BulkMetadataConfig, Mp3Track } from '../types';
 
@@ -24,6 +25,7 @@ interface BulkEditorBarProps {
   onStripLeadingNumbers: () => void;
   onOpenFindReplace: () => void;
   onOpenLyricsEditor: () => void;
+  onOpenSpectralAnalyzer?: () => void;
 }
 
 const COMMON_GENRES = [
@@ -42,6 +44,7 @@ export const BulkEditorBar: React.FC<BulkEditorBarProps> = ({
   onStripLeadingNumbers,
   onOpenFindReplace,
   onOpenLyricsEditor,
+  onOpenSpectralAnalyzer,
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   
@@ -149,6 +152,17 @@ export const BulkEditorBar: React.FC<BulkEditorBarProps> = ({
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
               <span>Lyrics Batch Cleaner</span>
             </button>
+
+            {onOpenSpectralAnalyzer && (
+              <button
+                onClick={onOpenSpectralAnalyzer}
+                className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 shadow-xs transition cursor-pointer font-semibold"
+                title="Run Fourier Transform spectral analysis"
+              >
+                <Activity className="w-3.5 h-3.5 text-indigo-600" />
+                <span>Spectral Analyzer (FFT)</span>
+              </button>
+            )}
           </div>
 
           {/* Form for Album Batch Metadata */}
