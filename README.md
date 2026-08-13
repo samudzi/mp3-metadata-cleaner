@@ -47,8 +47,8 @@ All processing is executed client-side using Web Audio and Web Assembly APIs. No
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/distroprep-studio.git
-   cd distroprep-studio
+   git clone https://github.com/samudzi/mp3-metadata-cleaner.git
+   cd mp3-metadata-cleaner
    ```
 
 2. Install dependencies:
